@@ -1,0 +1,43 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+default_language_version:
+  python: python3.11
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+    - id: black
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+    - id: isort
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.285
+    hooks:
+    - id: ruff
+      alias: autoformat
+      args: [--fix]
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: 1.16.0
+    hooks:
+    - id: django-upgrade
+      args: [--target-version, "5.0"]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.9.0
+    hooks:
+    - id: mypy
+      args: [--no-strict-optional, --ignore-missing-imports, "--config=/Users/garrethcain/Code/django-starter/django-starter/setup.cfg"]
+      exclude: "[a-zA-Z]*/[a-zA-Z]*/(migrations)/(.)*"
+      additional_dependencies: [
+          'djangorestframework-stubs[compatible-mypy]',
+          'django-stubs',
+      ]
